@@ -1,4 +1,5 @@
-from api import db
+from app import db
+
 
 class History(db.Model):
     __tablename__ = 'histories'

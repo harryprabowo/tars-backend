@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 class Brake(db.Model):
     __tablename__ = 'histories'
