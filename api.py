@@ -16,31 +16,21 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 # extensions
 db = SQLAlchemy(app)
 
-
-class Car(db.Model):
-    __tablename__ = 'cars'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    picture_url = db.Column(db.String(1000))
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'picture_url': self.picture_url,
-        }
-
-
 @app.route('/api/hello')
 def hello():
     all_args = request.args.to_dict()
     return jsonify(all_args)
 
 
-@app.route('/api/car/<car_id>')
+@app.route('/api/cars/<car_id>')
 def summary(car_id):
     car = Car.query.get(car_id)
     return jsonify(car.serialize())
+
+
+@app.route('/api/histories/<car_id>')
+def histories(car_id):
+    car = Car.query.get(car_id)
 
 
 if __name__ == '__main__':
