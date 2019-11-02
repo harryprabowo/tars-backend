@@ -28,7 +28,7 @@ def summary(car_id):
     return jsonify(car.serialize())
 
 
-@app.route('api/summaries/<car_id>', methods=['GET'])
+@app.route('/api/summaries/<car_id>')
 def summaries(car_id):
     return jsonify(
         {
