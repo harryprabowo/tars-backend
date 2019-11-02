@@ -7,6 +7,7 @@ from app import app, db
 from constants import questions
 from models.car import Car
 from models.chat import Chat
+from models.dtc import DTC
 from models.history import History
 from flask import abort, request, jsonify, g, url_for
 from itsdangerous import (TimedJSONWebSignatureSerializer
@@ -27,38 +28,8 @@ def summary(car_id):
 
 @app.route('/api/summaries/<car_id>')
 def summaries(car_id):
-    return jsonify(
-        {
-            'car_id': car_id,
-            'summary': [
-                {
-                    'title': 'Brake',
-                    'score': 7,
-                    'details': "Brake fluid level is low"
-                },
-                {
-                    'title': 'Engine',
-                    'score': 4,
-                    'details': 'Radiator need replacement, Engine is overheating'
-                },
-                {
-                    'title': 'Electrical',
-                    'score': 5,
-                    'details': 'Low battery level, Dysfunctional electrical system on front light'
-                },
-                {
-                    'title': 'Fuel System',
-                    'score': 1,
-                    'details': 'Fuel Injector dirty'
-                },
-                {
-                    'title': 'Heating/AC',
-                    'score': 5,
-                    'details': 'AC need maintenance'
-                }
-            ]
-        }
-    )
+    summary = DTC.query.first()
+    return jsonify(summary.serialize())
 
 
 @app.route('/api/chats', methods=['POST'])
