@@ -12,7 +12,7 @@ from models.history import History
 from flask import abort, request, jsonify, g, url_for
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
-
+from init_db import init_db
 
 @app.route('/api/hello')
 def hello():
@@ -61,6 +61,5 @@ def chat_list():
 
 
 if __name__ == '__main__':
-    if not os.path.exists('db.sqlite'):
-        db.create_all()
+    init_db()
     app.run(debug=True)
