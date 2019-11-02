@@ -1,11 +1,10 @@
-from api import db
+from app import db
 from models.dtc import DTC
 import os
-import sqlite3
 import csv
 
-if not os.path.exists('db.sqlite'):
-    db.create_all()
+db.drop_all()
+db.create_all()
 
 with open('dtc.csv', mode='r') as dtc_file:
     csv_reader = csv.reader(dtc_file)
