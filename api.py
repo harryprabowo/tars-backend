@@ -28,9 +28,17 @@ def summary(car_id):
 
 @app.route('/api/summaries/<car_id>')
 def summaries(car_id):
-    summary = DTC.query.first()
-    return jsonify(summary.serialize())
-
+    latest_history = History.query.order_by(History.timestamp).first()
+    latest_histories = History.query.filter_by(timestamp = latest_history.timestamp, car_id = car_id)
+    dtcs = []
+    for hist in latest_histories:
+        if hist.dtc != "":
+            dtc = DTC.query.filter_by(dtc_number = hist.dtc).first()
+            dtcs.append(dtc.serialize())
+    res = latest_history.serialize()
+    res.pop('dtc')
+    res['dtcs'] = dtcs
+    return jsonify(res)
 
 @app.route('/api/chats', methods=['POST'])
 def chat_create():
