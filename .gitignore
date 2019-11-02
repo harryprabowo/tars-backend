@@ -1,5 +1,4 @@
 *.py[cod]
-db.sqlite
 
 # C extensions
 *.so

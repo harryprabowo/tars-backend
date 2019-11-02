@@ -23,5 +23,4 @@ def init_db():
                     urgency=row[5]
                 )
                 db.session.add(dtc)
-    print("test")
     db.session.commit()
