@@ -28,10 +28,40 @@ def summary(car_id):
     return jsonify(car.serialize())
 
 
-@app.route('/api/histories/<car_id>')
-def histories(car_id):
-    car = Car.query.get(car_id)
-
+@app.route('api/summaries/<car_id>', methods=['GET'])
+def summaries(car_id):
+    return jsonify(
+        {
+            'car_id' : car_id,
+            'summary' : [
+                {
+                    'title' : 'Brake',
+                    'score' : 7,
+                    'details' : "Brake fluid level is low"
+                },
+                {
+                    'title' : 'Engine',
+                    'score' : 4,
+                    'details' : 'Radiator need replacement, Engine is overheating'
+                },
+                {
+                    'title' : 'Electrical',
+                    'score' : 5,
+                    'details' : 'Low battery level, Dysfunctional electrical system on front light'
+                },
+                {
+                    'title' : 'Fuel System',
+                    'score' : 1,
+                    'details' : 'Fuel Injector dirty'
+                },
+                {
+                    'title' : 'Heating/AC',
+                    'score' : 5,
+                    'details' : 'AC need maintenance'   
+                }
+            ]
+        }
+    )
 
 if __name__ == '__main__':
     if not os.path.exists('db.sqlite'):
